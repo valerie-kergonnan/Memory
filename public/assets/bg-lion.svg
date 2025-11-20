@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background gradient -->
+  <rect width="1920" height="1080" fill="url(#blueGradient)"/>
+  
+  <!-- Lion silhouette -->
+  <g opacity="0.15" transform="translate(960, 540)">
+    <!-- Lion head -->
+    <ellipse cx="0" cy="0" rx="180" ry="200" fill="#ffffff"/>
+    
+    <!-- Mane -->
+    <g>
+      <ellipse cx="-120" cy="-80" rx="100" ry="120" fill="#ffffff"/>
+      <ellipse cx="120" cy="-80" rx="100" ry="120" fill="#ffffff"/>
+      <ellipse cx="-150" cy="0" rx="90" ry="140" fill="#ffffff"/>
+      <ellipse cx="150" cy="0" rx="90" ry="140" fill="#ffffff"/>
+      <ellipse cx="-100" cy="100" rx="80" ry="100" fill="#ffffff"/>
+      <ellipse cx="100" cy="100" rx="80" ry="100" fill="#ffffff"/>
+      <ellipse cx="0" cy="-120" rx="140" ry="100" fill="#ffffff"/>
+      <ellipse cx="-80" cy="-120" rx="100" ry="90" fill="#ffffff"/>
+      <ellipse cx="80" cy="-120" rx="100" ry="90" fill="#ffffff"/>
+    </g>
+    
+    <!-- Face -->
+    <ellipse cx="0" cy="0" rx="140" ry="160" fill="#e0e7ff"/>
+    
+    <!-- Eyes -->
+    <ellipse cx="-45" cy="-30" rx="25" ry="35" fill="#1e3a8a"/>
+    <ellipse cx="45" cy="-30" rx="25" ry="35" fill="#1e3a8a"/>
+    <ellipse cx="-40" cy="-35" rx="12" ry="18" fill="#60a5fa"/>
+    <ellipse cx="50" cy="-35" rx="12" ry="18" fill="#60a5fa"/>
+    
+    <!-- Nose -->
+    <path d="M -20,10 L 0,-10 L 20,10 Q 10,30 0,35 Q -10,30 -20,10" fill="#1e3a8a"/>
+    
+    <!-- Mouth -->
+    <path d="M 0,35 Q -40,60 -60,50" stroke="#1e3a8a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M 0,35 Q 40,60 60,50" stroke="#1e3a8a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    
+    <!-- Whiskers -->
+    <line x1="-140" y1="20" x2="-200" y2="10" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
+    <line x1="-140" y1="35" x2="-200" y2="35" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
+    <line x1="-140" y1="50" x2="-200" y2="55" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
+    <line x1="140" y1="20" x2="200" y2="10" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
+    <line x1="140" y1="35" x2="200" y2="35" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
+    <line x1="140" y1="50" x2="200" y2="55" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
+    
+    <!-- Body -->
+    <ellipse cx="0" cy="280" rx="160" ry="140" fill="#ffffff" opacity="0.8"/>
+    
+    <!-- Legs -->
+    <rect x="-80" y="380" width="50" height="120" rx="25" fill="#ffffff" opacity="0.7"/>
+    <rect x="30" y="380" width="50" height="120" rx="25" fill="#ffffff" opacity="0.7"/>
+    
+    <!-- Tail -->
+    <path d="M 120,250 Q 200,200 250,150 Q 260,140 270,150 L 280,145" stroke="#ffffff" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <ellipse cx="285" cy="145" rx="20" ry="25" fill="#ffffff" opacity="0.7"/>
+  </g>
+  
+  <!-- Decorative circles -->
+  <circle cx="200" cy="150" r="8" fill="#60a5fa" opacity="0.3" filter="url(#glow)"/>
+  <circle cx="1720" cy="200" r="12" fill="#60a5fa" opacity="0.3" filter="url(#glow)"/>
+  <circle cx="300" cy="900" r="10" fill="#3b82f6" opacity="0.3" filter="url(#glow)"/>
+  <circle cx="1650" cy="850" r="15" fill="#3b82f6" opacity="0.3" filter="url(#glow)"/>
+</svg>

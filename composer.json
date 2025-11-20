@@ -1,0 +1,10 @@
+{
+    "name": "valerie-kergonnan/memory",
+    "autoload": {
+        "psr-4": {
+            "Memory\\": "classes/",
+            "Memory\\Config\\": "config/"
+        }
+    },
+    "require": {}
+}
