@@ -1,79 +1,63 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
   <defs>
-    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
+    <linearGradient id="algeriaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d5f4d;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e8ebe9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b4a4a;stop-opacity:1" />
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
   </defs>
   
-  <!-- Background gradient -->
-  <rect width="1920" height="1080" fill="url(#blueGradient)"/>
+  <!-- Fond en dégradé inspiré de l'Algérie (tons adoucis) -->
+  <rect width="1920" height="1080" fill="url(#algeriaGradient)"/>
   
-  <!-- Lion silhouette -->
-  <g opacity="0.15" transform="translate(960, 540)">
-    <!-- Lion head -->
-    <ellipse cx="0" cy="0" rx="180" ry="200" fill="#ffffff"/>
+  <!-- Mosquée centrale (semi-transparente) -->
+  <g transform="translate(960, 540) scale(3.5)" opacity="0.15">
+    <!-- Dôme principal -->
+    <ellipse cx="0" cy="-85" rx="70" ry="45" fill="rgba(45, 95, 77, 0.6)"/>
+    <path d="M -70,-85 Q -70,-40 0,-40 Q 70,-40 70,-85" fill="rgba(45, 95, 77, 0.7)"/>
     
-    <!-- Mane -->
-    <g>
-      <ellipse cx="-120" cy="-80" rx="100" ry="120" fill="#ffffff"/>
-      <ellipse cx="120" cy="-80" rx="100" ry="120" fill="#ffffff"/>
-      <ellipse cx="-150" cy="0" rx="90" ry="140" fill="#ffffff"/>
-      <ellipse cx="150" cy="0" rx="90" ry="140" fill="#ffffff"/>
-      <ellipse cx="-100" cy="100" rx="80" ry="100" fill="#ffffff"/>
-      <ellipse cx="100" cy="100" rx="80" ry="100" fill="#ffffff"/>
-      <ellipse cx="0" cy="-120" rx="140" ry="100" fill="#ffffff"/>
-      <ellipse cx="-80" cy="-120" rx="100" ry="90" fill="#ffffff"/>
-      <ellipse cx="80" cy="-120" rx="100" ry="90" fill="#ffffff"/>
+    <!-- Croissant et étoile au sommet -->
+    <path d="M -6,-135 Q 0,-145 6,-135 Q 0,-140 -6,-135 Z" fill="rgba(139, 74, 74, 0.8)"/>
+    <circle cx="9" cy="-138" r="7" fill="none" stroke="rgba(139, 74, 74, 0.8)" stroke-width="2"/>
+    <path d="M 3,-143 L 5,-136 L 12,-136 L 7,-132 L 9,-125 L 3,-129 L -3,-125 L -1,-132 L -6,-136 L 1,-136 Z" 
+          fill="rgba(139, 74, 74, 0.8)"/>
+    
+    <!-- Flèche/minaret central -->
+    <rect x="-10" y="-130" width="20" height="45" fill="rgba(45, 95, 77, 0.7)" rx="2"/>
+    <rect x="-12" y="-90" width="24" height="8" fill="rgba(139, 74, 74, 0.6)"/>
+    
+    <!-- Corps principal de la mosquée -->
+    <rect x="-90" y="-40" width="180" height="110" fill="rgba(232, 235, 233, 0.8)" rx="5"/>
+    
+    <!-- Arches décoratives -->
+    <path d="M -70,70 L -70,20 Q -70,0 -50,0 Q -30,0 -30,20 L -30,70" 
+          fill="rgba(45, 95, 77, 0.5)" stroke="rgba(45, 95, 77, 0.8)" stroke-width="2"/>
+    <path d="M -20,70 L -20,20 Q -20,0 0,0 Q 20,0 20,20 L 20,70" 
+          fill="rgba(45, 95, 77, 0.5)" stroke="rgba(45, 95, 77, 0.8)" stroke-width="2"/>
+    <path d="M 30,70 L 30,20 Q 30,0 50,0 Q 70,0 70,20 L 70,70" 
+          fill="rgba(45, 95, 77, 0.5)" stroke="rgba(45, 95, 77, 0.8)" stroke-width="2"/>
+    
+    <!-- Minarets latéraux -->
+    <g transform="translate(-105, 0)">
+      <rect x="-12" y="-70" width="24" height="140" fill="rgba(45, 95, 77, 0.7)" rx="2"/>
+      <rect x="-14" y="-75" width="28" height="8" fill="rgba(139, 74, 74, 0.6)"/>
+      <ellipse cx="0" cy="-75" rx="18" ry="12" fill="rgba(139, 74, 74, 0.7)"/>
+      <path d="M -4,-92 Q 0,-100 4,-92 Q 0,-96 -4,-92 Z" fill="rgba(232, 235, 233, 0.9)"/>
+      <circle cx="6" cy="-95" r="5" fill="none" stroke="rgba(232, 235, 233, 0.9)" stroke-width="1.5"/>
     </g>
     
-    <!-- Face -->
-    <ellipse cx="0" cy="0" rx="140" ry="160" fill="#e0e7ff"/>
+    <g transform="translate(105, 0)">
+      <rect x="-12" y="-70" width="24" height="140" fill="rgba(45, 95, 77, 0.7)" rx="2"/>
+      <rect x="-14" y="-75" width="28" height="8" fill="rgba(139, 74, 74, 0.6)"/>
+      <ellipse cx="0" cy="-75" rx="18" ry="12" fill="rgba(139, 74, 74, 0.7)"/>
+      <path d="M -4,-92 Q 0,-100 4,-92 Q 0,-96 -4,-92 Z" fill="rgba(232, 235, 233, 0.9)"/>
+      <circle cx="6" cy="-95" r="5" fill="none" stroke="rgba(232, 235, 233, 0.9)" stroke-width="1.5"/>
+    </g>
     
-    <!-- Eyes -->
-    <ellipse cx="-45" cy="-30" rx="25" ry="35" fill="#1e3a8a"/>
-    <ellipse cx="45" cy="-30" rx="25" ry="35" fill="#1e3a8a"/>
-    <ellipse cx="-40" cy="-35" rx="12" ry="18" fill="#60a5fa"/>
-    <ellipse cx="50" cy="-35" rx="12" ry="18" fill="#60a5fa"/>
-    
-    <!-- Nose -->
-    <path d="M -20,10 L 0,-10 L 20,10 Q 10,30 0,35 Q -10,30 -20,10" fill="#1e3a8a"/>
-    
-    <!-- Mouth -->
-    <path d="M 0,35 Q -40,60 -60,50" stroke="#1e3a8a" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M 0,35 Q 40,60 60,50" stroke="#1e3a8a" stroke-width="5" fill="none" stroke-linecap="round"/>
-    
-    <!-- Whiskers -->
-    <line x1="-140" y1="20" x2="-200" y2="10" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
-    <line x1="-140" y1="35" x2="-200" y2="35" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
-    <line x1="-140" y1="50" x2="-200" y2="55" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
-    <line x1="140" y1="20" x2="200" y2="10" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
-    <line x1="140" y1="35" x2="200" y2="35" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
-    <line x1="140" y1="50" x2="200" y2="55" stroke="#1e3a8a" stroke-width="3" opacity="0.6"/>
-    
-    <!-- Body -->
-    <ellipse cx="0" cy="280" rx="160" ry="140" fill="#ffffff" opacity="0.8"/>
-    
-    <!-- Legs -->
-    <rect x="-80" y="380" width="50" height="120" rx="25" fill="#ffffff" opacity="0.7"/>
-    <rect x="30" y="380" width="50" height="120" rx="25" fill="#ffffff" opacity="0.7"/>
-    
-    <!-- Tail -->
-    <path d="M 120,250 Q 200,200 250,150 Q 260,140 270,150 L 280,145" stroke="#ffffff" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.7"/>
-    <ellipse cx="285" cy="145" rx="20" ry="25" fill="#ffffff" opacity="0.7"/>
+    <!-- Motifs géométriques -->
+    <circle cx="-50" cy="-15" r="8" fill="none" stroke="rgba(139, 74, 74, 0.6)" stroke-width="2"/>
+    <circle cx="50" cy="-15" r="8" fill="none" stroke="rgba(139, 74, 74, 0.6)" stroke-width="2"/>
+    <path d="M -50,-15 L -54,-11 L -50,-7 L -46,-11 Z" fill="rgba(139, 74, 74, 0.6)"/>
+    <path d="M 50,-15 L 54,-11 L 50,-7 L 46,-11 Z" fill="rgba(139, 74, 74, 0.6)"/>
   </g>
-  
-  <!-- Decorative circles -->
-  <circle cx="200" cy="150" r="8" fill="#60a5fa" opacity="0.3" filter="url(#glow)"/>
-  <circle cx="1720" cy="200" r="12" fill="#60a5fa" opacity="0.3" filter="url(#glow)"/>
-  <circle cx="300" cy="900" r="10" fill="#3b82f6" opacity="0.3" filter="url(#glow)"/>
-  <circle cx="1650" cy="850" r="15" fill="#3b82f6" opacity="0.3" filter="url(#glow)"/>
 </svg>

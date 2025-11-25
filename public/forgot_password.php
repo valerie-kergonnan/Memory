@@ -1,9 +1,48 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-use Memory\Player;
 use Memory\Config\Database;
 
+session_start();
+
+$message = '';
+
+try {
+    $pdo = Database::getConnection();
+} catch (Throwable $e) {
+    die('Erreur DB: ' . $e->getMessage());
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+
+    if ($email) {
+        // Vérifier si l'email existe
+        $stmt = $pdo->prepare("SELECT id, username FROM users WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            // Générer un token de réinitialisation
+            $token = bin2hex(random_bytes(32));
+            $expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+            // Stocker le token dans la base de données
+            $stmt = $pdo->prepare("INSERT INTO password_resets (user_id, token, expiry) VALUES (:user_id, :token, :expiry)");
+            $stmt->execute([
+                'user_id' => $user['id'],
+                'token' => $token,
+                'expiry' => $expiry
+            ]);
+
+            $message = '<div class="message success">✓ Un lien de réinitialisation a été envoyé (simulation). <br><a href="password_resets.php?token=' . $token . '" style="color: #155724;">Cliquez ici pour réinitialiser</a></div>';
+        } else {
+            $message = '<div class="message error">✗ Aucun compte associé à cet email.</div>';
+        }
+    } else {
+        $message = '<div class="message error">✗ Veuillez entrer votre email.</div>';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -11,7 +50,7 @@ use Memory\Config\Database;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game - Profil</title>
+    <title>Memory Game - Mot de passe oublié</title>
     <style>
         * {
             margin: 0;
@@ -60,8 +99,7 @@ use Memory\Config\Database;
         }
 
         .nav-bar a.active {
-            background: linear-gradient(135deg, #C17817 0%, #8B5A0F 100%);
-            box-shadow: 0 4px 15px rgba(139, 90, 15, 0.4);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
         }
 
         .page-wrapper {
@@ -75,8 +113,8 @@ use Memory\Config\Database;
             background: linear-gradient(135deg, rgba(255, 248, 220, 0.98) 0%, rgba(255, 243, 205, 0.95) 100%);
             border-radius: 20px;
             padding: 40px;
-            max-width: 500px;
-            width: 500px;
+            max-width: 450px;
+            width: 100%;
             box-shadow: 0 20px 60px rgba(193, 120, 23, 0.4);
             border: 3px solid rgba(247, 147, 30, 0.4);
         }
@@ -84,14 +122,16 @@ use Memory\Config\Database;
         h1 {
             color: #C17817;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            font-size: 2em;
             text-shadow: 2px 2px 4px rgba(139, 90, 15, 0.2);
         }
 
-        h2 {
-            color: #F7931E;
-            margin: 25px 0 15px;
-            font-size: 1.3em;
+        .info-text {
+            color: #8B5A0F;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
 
         form {
@@ -101,7 +141,7 @@ use Memory\Config\Database;
         }
 
         input {
-            padding: 12px;
+            padding: 14px;
             border: 2px solid #F7931E;
             border-radius: 8px;
             font-size: 1em;
@@ -115,7 +155,7 @@ use Memory\Config\Database;
         }
 
         button {
-            padding: 12px;
+            padding: 14px;
             background: linear-gradient(135deg, #C17817 0%, #F7931E 50%, #FBB03B 100%);
             color: white;
             border: none;
@@ -150,23 +190,32 @@ use Memory\Config\Database;
             color: #721c24;
         }
 
-        .nav-links {
+        .link-text {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 20px;
+            color: #666;
         }
 
-        .nav-links a {
-            color: #C17817;
+        .link-text a {
+            color: #F7931E;
             text-decoration: none;
-            padding: 10px 20px;
-            background: rgba(247, 147, 30, 0.2);
-            border-radius: 5px;
-            margin: 0 5px;
-            transition: background 0.3s;
+            font-weight: bold;
         }
 
-        .nav-links a:hover {
-            background: rgba(247, 147, 30, 0.3);
+        .link-text a:hover {
+            color: #C17817;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .nav-bar {
+                gap: 10px;
+            }
+
+            .nav-bar a {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
@@ -175,70 +224,39 @@ use Memory\Config\Database;
     <nav class="nav-bar">
         <a href="index.php">🏠 Accueil</a>
         <a href="play.php">🎮 Jouer</a>
-        <a href="profile.php?action=login" class="active">🔐 Connexion</a>
-        <a href="profile.php?action=register">📝 Inscription</a>
+        <a href="login.php">🔐 Connexion</a>
+        <a href="register.php">📝 Inscription</a>
         <a href="Top.php">🏆 Classement</a>
+        <?php if (isset($_SESSION['username'])): ?>
+            <a href="#" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                👤 <?= htmlspecialchars($_SESSION['username']) ?>
+            </a>
+            <a href="logout.php" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                🚪 Déconnexion
+            </a>
+        <?php endif; ?>
     </nav>
 
     <div class="page-wrapper">
         <div class="container">
-            <h1>👤 Profil Joueur</h1>
-            <?php
+            <h1>🔑 Mot de passe oublié</h1>
 
-            try {
-                $pdo = Database::getConnection();
-            } catch (Throwable $e) {
-                die('Erreur DB: ' . $e->getMessage());
-            }
+            <p class="info-text">
+                Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+            </p>
 
-            $message = '';
-            $player = new Player();
+            <?= $message ?>
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $action = $_POST['action'] ?? 'login';
-                $username = trim($_POST['username'] ?? '');
-                $password = $_POST['password'] ?? '';
+            <form method="post">
+                <input name="email" type="email" placeholder="Votre email" required autofocus>
+                <button type="submit">Envoyer le lien</button>
+            </form>
 
-                if ($action === 'register') {
-                    $email = trim($_POST['email'] ?? '');
-                    if ($username && $email && $password) {
-                        if ($player->register($username, $email, $password)) {
-                            $message = '<p style="color: green;">Compte créé avec succès! ID: ' . $player->getId() . '</p>';
-                        } else {
-                            $message = '<p style="color: red;">Erreur: Username ou email déjà utilisé.</p>';
-                        }
-                    } else {
-                        $message = '<p style="color: red;">Tous les champs sont requis.</p>';
-                    }
-                } elseif ($action === 'login') {
-                    if ($username && $password) {
-                        if ($player->login($username, $password)) {
-                            $message = '<p style="color: green;">Connecté! Bienvenue ' . htmlspecialchars($player->getUsername()) . ' (ID: ' . $player->getId() . ')</p>';
-                        } else {
-                            $message = '<p style="color: red;">Username ou mot de passe incorrect.</p>';
-                        }
-                    } else {
-                        $message = '<p style="color: red;">Username et mot de passe requis.</p>';
-                    }
-                }
-            }
+            <div class="link-text">
+                <a href="login.php">← Retour à la connexion</a>
+            </div>
+        </div>
+    </div>
+</body>
 
-            echo '<h1>Profil Joueur</h1>';
-            echo $message;
-            echo '<h2>Connexion</h2>';
-            echo '<form method="post">';
-            echo '<input type="hidden" name="action" value="login">';
-            echo 'Username: <input name="username" required><br>';
-            echo 'Password: <input name="password" type="password" required><br>';
-            echo '<button type="submit">Se connecter</button>';
-            echo '</form>';
-
-            echo '<h2>Créer un compte</h2>';
-            echo '<form method="post">';
-            echo '<input type="hidden" name="action" value="register">';
-            echo '<input name="username" placeholder="Username" required>';
-            echo '<input name="email" type="email" placeholder="Email" required>';
-            echo '<input name="password" type="password" placeholder="Mot de passe" required>';
-            echo '<button type="submit">Créer</button>';
-            echo '</form>';
-            echo '</div></div></body></html>';
+</html>
